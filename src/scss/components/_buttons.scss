@@ -1,0 +1,13 @@
+.button {
+    @extend .brand-background;
+    @extend .fs\-;
+    @extend .fw\+;
+    @extend .ph\+\+;
+    @extend .pv;
+    @extend .border-box;
+    @extend .outline-none;
+    @extend .cursor-pointer;
+    
+    color: white;
+    border: none;
+}

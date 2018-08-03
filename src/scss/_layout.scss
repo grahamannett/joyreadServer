@@ -1,0 +1,17 @@
+body {
+    @extend .font-primary;
+    @extend .fs;
+    @extend .text-color;
+    @extend .w1300;
+    @extend .ph\+\+;
+    @extend .margin-center;
+    @extend .border-box;
+
+    line-height: 20px;
+}
+
+::selection {
+    @extend .brand-background;
+
+    color: white;
+}

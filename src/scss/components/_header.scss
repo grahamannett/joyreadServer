@@ -1,0 +1,158 @@
+.header {
+    @extend .rel-pos;
+
+    height: 60px;
+
+    &__logo {
+        @extend .abs-pos;
+        @extend .cursor-pointer;
+
+        width: 31px;
+        height: 38px;
+        top: 10px;
+        left: 50%;
+        margin-left: -15.5px;
+
+        img {
+            @extend .w1\/1;
+            
+            height: 100%;
+        }
+    }
+
+    &__left {
+        @extend .pull-left;
+        
+        margin-top: 13px;
+    }
+
+    &__search {
+        width: 420px !important;
+    }
+
+    &__right {
+        @extend .pull-right;
+        @extend .mt\+;
+        @extend .flex;
+
+        & div {
+            @extend .mr\+\+;
+
+            &:last-child {
+                @extend .mr0;
+            }
+        }
+    }
+
+    &__menu, &__notification, &__books, &__link, &__signup {
+        @extend .flex;
+        @extend .flex__center;
+        @extend .cursor-pointer;
+        @extend .fw\+;
+
+        & .icon {
+            @extend .mr\-;
+        }
+
+        &:hover {
+            @extend .text-hover;
+
+            svg {
+                path {
+                    fill: $brand-primary;
+                }
+            }
+        }
+    }
+
+    &__m-dropdown {
+        @extend .abs-pos;
+        @extend .border;
+        @extend .pv;
+        @extend .border-box;
+        @extend .none;
+
+        width: 220px;
+        height: auto;
+        background: white;
+        top: 60px;
+        right: 0;
+        z-index: 1;
+
+        &.open {
+            @extend .block;
+        }
+
+        &:before {
+            @extend .abs-pos;
+
+            content: "";
+            top: -11px;
+            right: 19px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 10px solid rgba(0,0,0,0.14);
+        }
+
+        &:after {
+            @extend .abs-pos;
+
+            content: "";
+            top: -10px;
+            right: 20px;
+            width: 0; 
+            height: 0; 
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-bottom: 10px solid white;
+        }
+    }
+
+    &__n-dropdown {
+        @extend .header__m-dropdown;
+
+        width: 300px;
+        right: 150px;
+    }
+
+    &__link {
+        @extend .ph;
+        @extend .pv\-;
+        @extend .mb;
+
+        &--notification {
+            align-items: flex-start !important;
+
+            & span {
+                @extend .fw;
+                @extend .fs\-;
+
+                width: 260px;
+                margin-top: -4px;
+                line-height: 20px;
+
+                & em {
+                    @extend .fw\+;
+                }
+            }
+        }
+
+        &:last-child {
+            @extend .mb0;
+        }
+
+        &:hover {
+            @extend .brand-background;
+
+            color: white;
+
+            svg {
+                path {
+                    fill: white;
+                }
+            }
+        }
+    }
+}

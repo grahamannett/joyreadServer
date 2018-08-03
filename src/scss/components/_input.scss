@@ -1,0 +1,13 @@
+input[type="text"], input[type="email"], input[type="password"] {
+    @extend .p;
+    @extend .border;
+    @extend .outline-none;
+    @extend .border-box;
+    @extend .fs\-;
+
+    height: 36px;
+
+    &:focus {
+        @extend .border-focus;
+    }
+}

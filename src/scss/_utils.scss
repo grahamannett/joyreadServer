@@ -1,0 +1,278 @@
+@mixin spacing-variations($properties...) {
+    @each $property in $properties {
+        #{$property}: 10px !important;
+
+        &0 {
+            #{$property}: 0 !important;
+        }
+
+        $modifier-sign: \+;
+        @for $i from 2 through 5 {
+            &#{$modifier-sign} {
+                #{$property}: floor(10px * $i) !important;
+            }
+            $modifier-sign: $modifier-sign + \+; // append string
+        }
+
+        &\- {
+            #{$property}: floor(10px / 2) !important;
+        }
+        &\-\- {
+            #{$property}: floor(10px / 4) !important;
+        }
+    }
+}
+
+.m { // margin
+    @include spacing-variations(margin);
+}
+
+.mt { // margin top
+    @include spacing-variations(margin-top);
+}
+
+.mb { // margin bottom
+    @include spacing-variations(margin-bottom);
+}
+
+.ml { // margin left
+    @include spacing-variations(margin-left);
+}
+
+.mr { // margin right
+    @include spacing-variations(margin-right);
+}
+
+.mv { // margin vertical
+    @include spacing-variations(margin-top, margin-bottom);
+}
+
+.mh { // margin horizontal
+    @include spacing-variations(margin-left, margin-right);
+}
+
+.p { // padding
+    @include spacing-variations(padding);
+}
+
+.pt { // padding top
+    @include spacing-variations(padding-top);
+}
+
+.pb { // padding bottom
+    @include spacing-variations(padding-bottom);
+}
+
+.pl { // padding left
+    @include spacing-variations(padding-left);
+}
+
+.pr { // padding right
+    @include spacing-variations(padding-right);
+}
+
+.pv { // padding vertical
+    @include spacing-variations(padding-top, padding-bottom);
+}
+
+.ph { // padding horizontal
+    @include spacing-variations(padding-left, padding-right);
+}
+
+.w {
+    @for $i from 1 through 5 {
+        &1\/#{$i} {
+            width: percentage(1/$i) !important;
+        }
+    }
+}
+
+.fs {
+    font-size: 16px;
+
+    &\+ {
+        font-size: 20px;
+    }
+
+    &\- {
+        font-size: 14px;
+    }
+}
+
+.fw {
+    font-weight: 400;
+
+    &\+ {
+        font-weight: 600;
+    }
+}
+
+.w1300 {
+    width: 1300px;
+}
+
+.brand-color {
+    color: $brand-primary;
+}
+
+.brand-secondary-color {
+    color: $brand-secondary;
+}
+
+.brand-background {
+    background-color: $brand-primary;
+}
+
+.brand-secondary-background {
+    background-color: $brand-secondary;
+}
+
+.font-primary {
+    font-family: $font-primary;
+}
+
+.text-color {
+    color: $text-primary;
+}
+
+.text-hover {
+    color: $brand-primary;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.letter-spacing {
+    letter-spacing: 1px;
+}
+
+.pull-left {
+    float: left;
+}
+
+.pull-right {
+    float: right;
+}
+
+.abs-pos {
+    position: absolute;
+}
+
+.rel-pos {
+    position: relative;
+}
+
+.border-box {
+    box-sizing: border-box;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.none {
+    display: none;
+}
+
+.block {
+    display: block;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.margin-center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.flex {
+    display: flex;
+
+    &__column {
+        flex-direction: column;
+    }
+
+    &__start {
+        align-items: flex-start;
+    }
+
+    &__end {
+        align-items: flex-end;
+    }
+
+    &__baseline {
+        align-items: baseline;
+    }
+
+    &__center {
+        align-items: center;
+    }
+
+    &__space-between {
+        justify-content: space-between;
+    }
+
+    &__space-around {
+        justify-content: space-around;
+    }
+
+    &__space-evenly {
+        justify-content: space-evenly;
+    }
+
+    &__justify-start {
+        justify-content: flex-start;
+    }
+
+    &__justify-end {
+        justify-content: flex-end;
+    }
+
+    &__justify-center {
+        justify-content: center;
+    }
+
+    &__wrap {
+        flex-wrap: wrap;
+    }
+}
+
+.no-repeat {
+    background-repeat: no-repeat;
+}
+
+.cover {
+    background-size: cover;
+}
+
+.clearfix {
+    clear: both;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.outline-none {
+    outline: none;
+}
+
+.no-link {
+    text-decoration: none;
+    outline: none;
+}
+
+.border {
+    border: 1px solid $border-color;
+}
+
+.border-focus {
+    border: 1px solid $brand-primary;
+}

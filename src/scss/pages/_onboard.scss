@@ -1,0 +1,25 @@
+.onboard {
+    @extend .mt\+\+\+\+;
+    @extend .margin-center;
+
+    width: 300px;
+
+    &__label {
+        @extend .block;
+        @extend .w1\/1;
+        @extend .fw\+;
+        
+        text-align: center;
+    }
+
+    input {
+        @extend .w1\/1;
+        @extend .mt\+;
+    }
+
+    &__submit {
+        @extend .block;
+        @extend .margin-center;
+        @extend .mt\+\+;
+    }
+}
