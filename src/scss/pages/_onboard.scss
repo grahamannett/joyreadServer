@@ -12,7 +12,7 @@
         text-align: center;
     }
 
-    input {
+    input[type="text"], input[type="email"], input[type="password"] {
         @extend .w1\/1;
         @extend .mt\+;
     }

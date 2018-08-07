@@ -1,4 +1,5 @@
 .button {
+    @extend .block;
     @extend .brand-background;
     @extend .fs\-;
     @extend .fw\+;

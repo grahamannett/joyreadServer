@@ -15,12 +15,12 @@ function OnboardSignIn(props) {
             :
               onboard.state.isSignedUp
               ?
-                <div className="onboard">
+                <form className="onboard">
                   <label className="onboard__label">Sign In</label>
-                  <input type="email" className="onboard__email" id="signInEmail" placeholder="Email address" />
+                  <input type="text" className="onboard__usernameoremail" id="signInUsernameOrEmail" placeholder="Username / Email address" />
                   <input type="password" className="onboard__password" id="signInPassword" placeholder="Password" />
-                  <button className="button button-primary onboard__submit" onClick={() => onboard.signIn(props.signInAPI)}>Submit</button>
-                </div>
+                  <input type="submit" className="button button-primary onboard__submit" value="Submit" onClick={(event) => onboard.signIn(event, props.signInAPI)} />
+                </form>
               :
                 <Redirect to="/signup" />
           }

@@ -66,7 +66,7 @@ table {
   margin-top: 10px !important; }
   .mt0 {
     margin-top: 0 !important; }
-  .mt\+, .header__right, .onboard input {
+  .mt\+, .header__right, .onboard input[type="text"], .onboard input[type="email"], .onboard input[type="password"] {
     margin-top: 20px !important; }
   .mt\+\+, .currently-reading, .onboard__submit {
     margin-top: 30px !important; }
@@ -343,7 +343,7 @@ table {
   .ph\-\- {
     padding-right: 2px !important; }
 
-.w1\/1, .header__logo img, .currently-reading__header, .onboard__label, .onboard input {
+.w1\/1, .header__logo img, .currently-reading__header, .onboard__label, .onboard input[type="text"], .onboard input[type="email"], .onboard input[type="password"] {
   width: 100% !important; }
 
 .w1\/2 {
@@ -428,7 +428,7 @@ table {
 .none, .header__m-dropdown, .header__n-dropdown {
   display: none; }
 
-.block, .header__m-dropdown.open, .open.header__n-dropdown, .onboard__label, .onboard__submit {
+.block, .button, .header__m-dropdown.open, .open.header__n-dropdown, .onboard__label, .onboard__submit {
   display: block; }
 
 .inline-block {

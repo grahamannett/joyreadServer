@@ -9,7 +9,7 @@ import (
 
 // CreateUser ...
 func CreateUser(db *sql.DB) {
-	stmt, err := db.Prepare("CREATE TABLE IF NOT EXISTS `user` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` VARCHAR(255) NOT NULL, `email` VARCHAR(255) UNIQUE NOT NULL, `password_hash` VARCHAR(255) NOT NULL, `jwt_token` VARCHAR(255) NOT NULL)")
+	stmt, err := db.Prepare("CREATE TABLE IF NOT EXISTS `user` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `username` VARCHAR(255) UNIQUE NOT NULL, `email` VARCHAR(255) UNIQUE NOT NULL, `password_hash` VARCHAR(255) NOT NULL, `jwt_token` VARCHAR(255) NOT NULL)")
 	cError.CheckError(err)
 
 	_, err = stmt.Exec()
@@ -17,17 +17,18 @@ func CreateUser(db *sql.DB) {
 }
 
 // InsertUser ...
-func InsertUser(db *sql.DB, name string, email string, passwordHash string, tokenString string) {
-	stmt, err := db.Prepare("INSERT INTO `user` (name, email, password_hash, jwt_token) VALUES (?, ?, ?, ?)")
+func InsertUser(db *sql.DB, username string, email string, passwordHash string, tokenString string) {
+	stmt, err := db.Prepare("INSERT INTO `user` (username, email, password_hash, jwt_token) VALUES (?, ?, ?, ?)")
 	cError.CheckError(err)
 
-	_, err = stmt.Exec(name, email, passwordHash, tokenString)
+	_, err = stmt.Exec(username, email, passwordHash, tokenString)
 	cError.CheckError(err)
 }
 
 // SelectPasswordHashAndJWTToken ...
-func SelectPasswordHashAndJWTToken(db *sql.DB, email string) (string, string) {
-	rows, err := db.Query("SELECT `password_hash`, `jwt_token` FROM `user` WHERE `email` = ?", email)
+func SelectPasswordHashAndJWTToken(db *sql.DB, usernameoremail string) (string, string) {
+	// Search for username in the 'user' table with the given string
+	rows, err := db.Query("SELECT `password_hash`, `jwt_token` FROM `user` WHERE `username` = ?", usernameoremail)
 	cError.CheckError(err)
 
 	var (
@@ -38,6 +39,16 @@ func SelectPasswordHashAndJWTToken(db *sql.DB, email string) (string, string) {
 	if rows.Next() {
 		err := rows.Scan(&passwordHash, &tokenString)
 		cError.CheckError(err)
+	} else {
+		// if username doesn't exist, search for email in the 'user' table with the given string
+		rows, err := db.Query("SELECT `password_hash`, `jwt_token` FROM `user` WHERE `email` = ?", usernameoremail)
+		cError.CheckError(err)
+
+		if rows.Next() {
+			err := rows.Scan(&passwordHash, &tokenString)
+			cError.CheckError(err)
+		}
+		rows.Close()
 	}
 	rows.Close()
 

@@ -15,53 +15,22 @@ class OnboardContainer extends Container {
     };
   }
 
-  signUp(url) {
-    var name = document.getElementById('signUpName').value;
+  signUp(event, url) {
+    event.preventDefault();
+
+    var username = document.getElementById('signUpUsername').value;
     var email = document.getElementById('signUpEmail').value;
     var password = document.getElementById('signUpPassword').value;
-    var smtpServer = document.getElementById('signUpSMTPServer').value;
-    var smtpPort = document.getElementById('signUpSMTPPort').value;
-    var smtpEmail = document.getElementById('signUpSMTPEmail').value;
-    var smtpPassword = document.getElementById('signUpSMTPPassword').value;
 
-    var data = {
-      name: name,
-      email: email,
-      password: password,
-      smtp_server: smtpServer,
-      smtp_port: smtpPort,
-      smtp_email: smtpEmail,
-      smtp_password: smtpPassword
+    // Check for '@' in the username
+    var pattern = /^[\w&.-]+$/
+    if (!pattern.test(username)) {
+      alert('Invalid username - Special characters allowed are \'&\', \'.\', \'-\' ');
+      return false;
     }
 
-    fetch(url, {
-      method: 'post',
-      body: JSON.stringify(data),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      if (data.status === "registered") {
-        DeleteCookie("joyread");
-        SetCookie("joyread", data.token, 30);
-        
-        this.setState({ isSignedUp: true });
-      } else {
-        alert('Not registered.');
-      }
-    });
-  }
-  
-  signIn(url) {
-    var email = document.getElementById('signInEmail').value;
-    var password = document.getElementById('signInPassword').value;
-
     var data = {
+      username: username,
       email: email,
       password: password
     }
@@ -78,9 +47,42 @@ class OnboardContainer extends Container {
       return response.json();
     })
     .then((data) => {
-      if (data.status === "authorized") {
-        DeleteCookie("joyread");
-        SetCookie("joyread", data.token, 30);
+      if (data.status === 'registered') {
+        DeleteCookie('joyread');
+        SetCookie('joyread', data.token, 30);
+        
+        this.setState({ isSignedUp: true });
+      } else {
+        alert('Not registered.');
+      }
+    });
+  }
+  
+  signIn(event, url) {
+    event.preventDefault();
+    var usernameoremail = document.getElementById('signInUsernameOrEmail').value;
+    var password = document.getElementById('signInPassword').value;
+
+    var data = {
+      usernameoremail: usernameoremail,
+      password: password
+    }
+
+    fetch(url, {
+      method: 'post',
+      body: JSON.stringify(data),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      if (data.status === 'authorized') {
+        DeleteCookie('joyread');
+        SetCookie('joyread', data.token, 30);
 
         this.setState({ isSignedIn: true });
       } else {
@@ -90,7 +92,7 @@ class OnboardContainer extends Container {
   }
 
   signOut() {
-    DeleteCookie("joyread")
+    DeleteCookie('joyread')
     this.setState({ isSignedIn: false });
   }
 }

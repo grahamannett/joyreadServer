@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
-	"strconv"
 
 	// vendor packages
 	"github.com/dgrijalva/jwt-go"
@@ -12,7 +11,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 
 	// custom packages
-	"github.com/joyread/server/email"
+
 	cError "github.com/joyread/server/error"
 	"github.com/joyread/server/models"
 )
@@ -47,13 +46,9 @@ func _ValidateJWTToken(tokenString string, passwordHash string) (bool, error) {
 
 // SignUpStruct struct
 type SignUpStruct struct {
-	Fullname     string `json:"name" binding:"required"`
-	Email        string `json:"email" binding:"required"`
-	Password     string `json:"password" binding:"required"`
-	SMTPServer   string `json:"smtp_server" binding:"required"`
-	SMTPPort     string `json:"smtp_port" binding:"required"`
-	SMTPEmail    string `json:"smtp_email" binding:"required"`
-	SMTPPassword string `json:"smtp_password" binding:"required"`
+	Username string `json:"username" binding:"required"`
+	Email    string `json:"email" binding:"required"`
+	Password string `json:"password" binding:"required"`
 }
 
 // PostSignUp ...
@@ -71,17 +66,17 @@ func PostSignUp(c *gin.Context) {
 
 		db := c.MustGet("db").(*sql.DB)
 
-		models.InsertUser(db, form.Fullname, form.Email, passwordHash, tokenString)
+		models.InsertUser(db, form.Username, form.Email, passwordHash, tokenString)
 
 		// Convert string to int64
-		smtpPort, _ := strconv.Atoi(form.SMTPPort)
+		// smtpPort, _ := strconv.Atoi(form.SMTPPort)
 
-		models.InsertSMTP(db, form.SMTPServer, smtpPort, form.SMTPEmail, form.SMTPPassword)
+		// models.InsertSMTP(db, form.SMTPServer, smtpPort, form.SMTPEmail, form.SMTPPassword)
 
 		// Send confirmation email
-		emailSubject := "Email confirmation - Joyread"
-		emailBody := "Hi,<br /><br />Please confirm this link."
-		go email.SendEmail(form.SMTPEmail, form.Email, emailSubject, emailBody, form.SMTPServer, smtpPort, form.SMTPEmail, form.SMTPPassword)
+		// emailSubject := "Email confirmation - Joyread"
+		// emailBody := "Hi,<br /><br />Please confirm this link."
+		// go email.SendEmail(form.SMTPEmail, form.Email, emailSubject, emailBody, form.SMTPServer, smtpPort, form.SMTPEmail, form.SMTPPassword)
 
 		c.JSON(http.StatusMovedPermanently, gin.H{
 			"status": "registered",
@@ -94,8 +89,8 @@ func PostSignUp(c *gin.Context) {
 
 // SignInStruct struct
 type SignInStruct struct {
-	Email    string `json:"email" binding:"required"`
-	Password string `json:"password" binding:"required"`
+	UsernameOrEmail string `json:"usernameoremail" binding:"required"`
+	Password        string `json:"password" binding:"required"`
 }
 
 // PostSignIn ...
@@ -105,7 +100,7 @@ func PostSignIn(c *gin.Context) {
 	if err := c.BindJSON(&form); err == nil {
 		db := c.MustGet("db").(*sql.DB)
 
-		passwordHash, tokenString := models.SelectPasswordHashAndJWTToken(db, form.Email)
+		passwordHash, tokenString := models.SelectPasswordHashAndJWTToken(db, form.UsernameOrEmail)
 
 		if isPasswordValid := _CheckPasswordHash(form.Password, passwordHash); isPasswordValid == true {
 			isTokenValid, err := _ValidateJWTToken(tokenString, passwordHash)
