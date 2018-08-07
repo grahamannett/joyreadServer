@@ -22,18 +22,21 @@ import (
 )
 
 const (
-	portDefault      = "8080"
-	portEnv          = "JOYREAD_PORT"
-	dbPathEnv        = "JOYREAD_DB_PATH"
-	dbPathDefault    = "."
-	assetPathEnv     = "JOYREAD_ASSET_PATH"
-	assetPathDefault = "."
+	portDefault             = "8080"
+	portEnv                 = "JOYREAD_PORT"
+	dbPathEnv               = "JOYREAD_DB_PATH"
+	dbPathDefault           = "."
+	assetPathEnv            = "JOYREAD_ASSET_PATH"
+	assetPathDefault        = "."
+	postgresPasswordEnv     = "POSTGRES_PASSWORD"
+	postgresPasswordDefault = "postgres"
 )
 
 var (
-	serverPort = portDefault
-	dbPath     = dbPathDefault
-	assetPath  = assetPathDefault
+	serverPort       = portDefault
+	dbPath           = dbPathDefault
+	assetPath        = assetPathDefault
+	postgresPassword = postgresPasswordDefault
 )
 
 func init() {
@@ -41,6 +44,7 @@ func init() {
 	serverPort = getenv.GetEnv(portEnv, portDefault)
 	dbPath = getenv.GetEnv(dbPathEnv, dbPathDefault)
 	assetPath = getenv.GetEnv(assetPathEnv, assetPathDefault)
+	postgresPassword = getenv.GetEnv(postgresPasswordEnv, postgresPasswordDefault)
 }
 
 // StartServer handles the URL routes and starts the server
@@ -56,8 +60,9 @@ func StartServer() {
 	// HTML rendering
 	r.LoadHTMLGlob(path.Join(assetPath, "build/index.html"))
 
-	// Open sqlite3 database
-	db, err := sql.Open("sqlite3", path.Join(dbPath, "joyread.db"))
+	// Open postgres database
+	connStr := fmt.Sprintf("postgres://postgres:%v@localhost/joyread?sslmode=disable", postgresPassword)
+	db, err := sql.Open("postgres", connStr)
 	cError.CheckError(err)
 
 	// Close sqlite3 database when all the functions are done
