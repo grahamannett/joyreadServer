@@ -17,6 +17,17 @@
         @extend .mt\+;
     }
 
+    &__error {
+        @extend .none;
+        @extend .fs\-;
+        @extend .fw\+;
+        @extend .text-error;
+
+        &--active {
+            @extend .block;
+        }
+    }
+
     &__submit {
         @extend .block;
         @extend .margin-center;

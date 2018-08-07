@@ -113,7 +113,7 @@ table {
   .ml\-\- {
     margin-left: 2px !important; }
 
-.mr {
+.mr, .alert i {
   margin-right: 10px !important; }
   .mr0, .header__right div:last-child {
     margin-right: 0 !important; }
@@ -362,12 +362,12 @@ table {
   font-size: 16px; }
   .fs\+, .currently-reading__title {
     font-size: 20px; }
-  .fs\-, input[type="text"], input[type="email"], input[type="password"], .button, .header__link--notification span {
+  .fs\-, .alert, input[type="text"], input[type="email"], input[type="password"], .button, .header__link--notification span, .onboard__error {
     font-size: 14px; }
 
 .fw, .header__link--notification span {
   font-weight: 400; }
-  .fw\+, .button, .header__menu, .header__notification, .header__books, .header__link, .header__signup, .header__link--notification span em, .currently-reading__title, .onboard__label {
+  .fw\+, .alert, .button, .header__menu, .header__notification, .header__books, .header__link, .header__signup, .header__link--notification span em, .currently-reading__title, .onboard__label, .onboard__error {
     font-weight: 600; }
 
 .w1300, body {
@@ -394,6 +394,9 @@ table {
 .text-color, body {
   color: #676767; }
 
+.text-error, .onboard__error {
+  color: #BD3D3D; }
+
 .text-hover, .header__menu:hover, .header__notification:hover, .header__books:hover, .header__link:hover, .header__signup:hover {
   color: #F56363; }
 
@@ -412,23 +415,23 @@ table {
 .pull-right, .header__right, .currently-reading__nav {
   float: right; }
 
-.abs-pos, .header__logo, .header__m-dropdown, .header__n-dropdown, .header__m-dropdown:before, .header__n-dropdown:before, .header__m-dropdown:after, .header__n-dropdown:after {
+.abs-pos, .alert, .header__logo, .header__m-dropdown, .header__n-dropdown, .header__m-dropdown:before, .header__n-dropdown:before, .header__m-dropdown:after, .header__n-dropdown:after {
   position: absolute; }
 
 .rel-pos, .header, .currently-reading {
   position: relative; }
 
-.border-box, body, input[type="text"], input[type="email"], input[type="password"], .button, .header__m-dropdown, .header__n-dropdown, .currently-reading__left, .currently-reading__right {
+.border-box, body, .alert, input[type="text"], input[type="email"], input[type="password"], .button, .header__m-dropdown, .header__n-dropdown, .currently-reading__left, .currently-reading__right {
   -webkit-box-sizing: border-box;
   box-sizing: border-box; }
 
 .cursor-pointer, .button, .header__logo, .header__menu, .header__notification, .header__books, .header__link, .header__signup, .currently-reading__left, .currently-reading__right {
   cursor: pointer; }
 
-.none, .header__m-dropdown, .header__n-dropdown {
+.none, .alert, .header__m-dropdown, .header__n-dropdown, .onboard__error {
   display: none; }
 
-.block, .button, .header__m-dropdown.open, .open.header__n-dropdown, .onboard__label, .onboard__submit {
+.block, .button, .header__m-dropdown.open, .open.header__n-dropdown, .onboard__label, .onboard__error--active, .onboard__submit {
   display: block; }
 
 .inline-block {
@@ -438,7 +441,7 @@ table {
   margin-left: auto;
   margin-right: auto; }
 
-.flex, .header__right, .header__menu, .header__notification, .header__books, .header__link, .header__signup {
+.flex, .alert--error, .alert--success, .header__right, .header__menu, .header__notification, .header__books, .header__link, .header__signup {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex; }
@@ -459,7 +462,7 @@ table {
     -webkit-box-align: baseline;
     -ms-flex-align: baseline;
     align-items: baseline; }
-  .flex__center, .header__menu, .header__notification, .header__books, .header__link, .header__signup {
+  .flex__center, .alert--error, .alert--success, .header__menu, .header__notification, .header__books, .header__link, .header__signup {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center; }
@@ -509,7 +512,7 @@ table {
   text-decoration: none;
   outline: none; }
 
-.border, input[type="text"], input[type="email"], input[type="password"], .header__m-dropdown, .header__n-dropdown {
+.border, .alert, input[type="text"], input[type="email"], input[type="password"], .header__m-dropdown, .header__n-dropdown {
   border: 1px solid #E7E4E4; }
 
 .border-focus, input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
@@ -523,6 +526,29 @@ body {
 
 ::selection {
   color: white; }
+
+.alert {
+  width: 340px;
+  min-height: 40px;
+  background: #FFFFFF;
+  bottom: 70px;
+  right: 50px;
+  padding: 8px 20px;
+  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+  z-index: 999; }
+  .alert i {
+    width: 16px;
+    height: 16px;
+    background-repeat: no-repeat; }
+  .alert--error {
+    border-left: 3px solid #BD3D3D; }
+    .alert--error i {
+      background-image: url("../assets/vector/alert-error.svg"); }
+  .alert--success {
+    border-left: 3px solid #3DBD6F; }
+    .alert--success i {
+      background-image: url("../assets/vector/alert-success.svg"); }
 
 input[type="text"], input[type="email"], input[type="password"] {
   height: 36px; }
