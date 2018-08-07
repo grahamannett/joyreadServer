@@ -27,7 +27,7 @@
         @extend .flex;
         @extend .flex__center;
 
-        border-left: 3px solid $text-error;
+        border-left: 3px solid $brand-primary;
 
         & i {
             background-image: url('../assets/vector/alert-error.svg');
@@ -38,7 +38,7 @@
         @extend .flex;
         @extend .flex__center;
 
-        border-left: 3px solid $text-success;
+        border-left: 3px solid $brand-primary;
 
         & i {
             background-image: url('../assets/vector/alert-success.svg');

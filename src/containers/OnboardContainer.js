@@ -32,7 +32,7 @@ class OnboardContainer extends Container {
     var usernamePattern = /^[\w&.-]+$/;
     if (!usernamePattern.test(username)) {
       isError = true;
-      document.getElementById('signUpUsernameError').innerText = 'Invalid username - Special characters allowed are \'&\', \'.\', \'-\' ';
+      document.getElementById('signUpUsernameError').innerText = 'Invalid username - Special characters allowed are & . -';
       document.getElementById('signUpUsernameError').classList.add('onboard__error--active');
     }
 
@@ -96,7 +96,7 @@ class OnboardContainer extends Container {
         document.getElementById('alert').innerHTML = '<i></i><p>Your account is successfully registered</p>';
         document.getElementById('alert').classList.add('alert--success');
       } else {
-        document.getElementById('alert').innerText = 'Not registered';
+        document.getElementById('alert').innerText = '<i></i><p>Not registered</p>';
         document.getElementById('alert').classList.add('alert--error');
       }
     });

@@ -394,9 +394,6 @@ table {
 .text-color, body {
   color: #676767; }
 
-.text-error, .onboard__error {
-  color: #BD3D3D; }
-
 .text-hover, .header__menu:hover, .header__notification:hover, .header__books:hover, .header__link:hover, .header__signup:hover {
   color: #F56363; }
 
@@ -542,11 +539,11 @@ body {
     height: 16px;
     background-repeat: no-repeat; }
   .alert--error {
-    border-left: 3px solid #BD3D3D; }
+    border-left: 3px solid #F56363; }
     .alert--error i {
       background-image: url("../assets/vector/alert-error.svg"); }
   .alert--success {
-    border-left: 3px solid #3DBD6F; }
+    border-left: 3px solid #F56363; }
     .alert--success i {
       background-image: url("../assets/vector/alert-success.svg"); }
 
