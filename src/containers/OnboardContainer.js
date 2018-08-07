@@ -10,7 +10,7 @@ class OnboardContainer extends Container {
     var isTokenPresent = GetCookie("joyread") ? true : false;
     
     this.state = {
-      isSignedUp: false, // pull info from backend if admin had already signed up
+      isSignedUp: true, // pull info from backend if admin had already signed up
       isSignedIn: isTokenPresent
     };
   }
@@ -96,7 +96,7 @@ class OnboardContainer extends Container {
         document.getElementById('alert').innerHTML = '<i></i><p>Your account is successfully registered</p>';
         document.getElementById('alert').classList.add('alert--success');
       } else {
-        document.getElementById('alert').innerText = '<i></i><p>Not registered</p>';
+        document.getElementById('alert').innerHTML = '<i></i><p>Not registered</p>';
         document.getElementById('alert').classList.add('alert--error');
       }
     });
@@ -130,7 +130,8 @@ class OnboardContainer extends Container {
 
         this.setState({ isSignedIn: true });
       } else {
-        alert('Your email address or password is incorrect.');
+        document.getElementById('alert').innerHTML = '<i></i><p>Your email address or password is incorrect</p>';
+        document.getElementById('alert').classList.add('alert--error');
       }
     });
   }
