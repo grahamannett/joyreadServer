@@ -10,9 +10,38 @@ class OnboardContainer extends Container {
     var isTokenPresent = GetCookie("joyread") ? true : false;
     
     this.state = {
-      isSignedUp: true, // pull info from backend if admin had already signed up
+      isSignedUp: false, // pull info from backend if admin had already signed up
       isSignedIn: isTokenPresent
     };
+  }
+
+  removeOnboardErrors() {
+    var onboardErrors = document.getElementsByClassName('onboard__error');
+    for (var i = 0; i < onboardErrors.length; i++) {
+      onboardErrors[i].classList.remove('onboard__error--active');
+    }
+  }
+
+  // Check if required field value is valid
+  isFieldValid(pattern, fieldValue, errorField, errorText) {
+    if (!pattern.test(fieldValue)) {
+      document.getElementById(errorField).innerText = errorText;
+      document.getElementById(errorField).classList.add('onboard__error--active');
+      return true;
+    }
+
+    return false;
+  }
+
+  // Check if required field value is valid according to the regexp pattern given
+  isFieldNone(fieldValue, errorField, errorText) {
+    if (fieldValue === '') {
+      document.getElementById(errorField).innerText = errorText;
+      document.getElementById(errorField).classList.add('onboard__error--active');
+      return true;
+    }
+
+    return false;
   }
 
   signUp(event, url) {
@@ -23,52 +52,26 @@ class OnboardContainer extends Container {
     var password = document.getElementById('signUpPassword').value;
 
     var isError = false;
-    var onboardErrors = document.getElementsByClassName('onboard__error');
-    for (var i = 0; i < onboardErrors.length; i++) {
-      onboardErrors[i].classList.remove('onboard__error--active');
-    }
+    this.removeOnboardErrors();
 
     // Check for valid username
-    var usernamePattern = /^[\w&.-]+$/;
-    if (!usernamePattern.test(username)) {
-      isError = true;
-      document.getElementById('signUpUsernameError').innerText = 'Invalid username - Special characters allowed are & . -';
-      document.getElementById('signUpUsernameError').classList.add('onboard__error--active');
-    }
+    isError = this.isFieldValid(/^[\w&.-]+$/, username, 'signUpUsernameError', 'Invalid username - Special characters allowed are & . -');
 
     // Check if username value is none
-    if (username === '') {
-      isError = true;
-      document.getElementById('signUpUsernameError').innerText = 'This field is required';
-      document.getElementById('signUpUsernameError').classList.add('onboard__error--active');
-    }
+    isError = this.isFieldNone(username, 'signUpUsernameError', 'This field is required');
 
     // Check for valid email
     var emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (!emailPattern.test(email)) {
-      isError = true;
-      document.getElementById('signUpEmailError').innerText = 'Invalid email address';
-      document.getElementById('signUpEmailError').classList.add('onboard__error--active');
-    }
+    isError = this.isFieldValid(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, email, 'signUpEmailError', 'Invalid email address');
 
     // Check if email value is none
-    if (email === '') {
-      isError = true;
-      document.getElementById('signUpEmailError').innerText = 'This field is required';
-      document.getElementById('signUpEmailError').classList.add('onboard__error--active');
-    }
+    isError = this.isFieldNone(email, 'signUpEmailError', 'This field is required');
 
     // Check if password value is none
-    if (password === '') {
-      isError = true;
-      document.getElementById('signUpPasswordError').innerText = 'This field is required';
-      document.getElementById('signUpPasswordError').classList.add('onboard__error--active');
-    }
+    isError = this.isFieldNone(password, 'signUpPasswordError', 'This field is required');
 
     // Return false if any of the above errors exists
-    if (isError) {
-      return false;
-    }
+    if (isError) return false;
 
     var data = {
       username: username,
@@ -130,7 +133,7 @@ class OnboardContainer extends Container {
 
         this.setState({ isSignedIn: true });
       } else {
-        document.getElementById('alert').innerHTML = '<i></i><p>Your email address or password is incorrect</p>';
+        document.getElementById('alert').innerHTML = '<i></i><p>Your login credentials are incorrect</p>';
         document.getElementById('alert').classList.add('alert--error');
       }
     });
